@@ -1,9 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My GitHub Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>io_Dhamelin | Professional Illustrator & Character Designer</title>
+    <meta name="description" content="Portfolio of io_Dhamelin. Professional illustrator and colorist specialized in character design, D&D, and TTRPG.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Hello World! Welcome to my site.</h1>
+    <div id="canvas-container"></div>
+    <nav>
+        <div class="logo">io_Dhamelin</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="hero-content">
+                <h1 class="glitch" data-text="io_Dhamelin">io_Dhamelin</h1>
+                <p class="subtitle">Illustrator • Colorist • Character Designer</p>
+                <a href="https://vgen.co/io_Dhamelin" target="_blank" class="cta-button">Commission Me</a>
+            </div>
+            <div class="hero-image">
+                <img src="images/image_1.png" alt="io_Dhamelin Art Showcase">
+            </div>
+        </section>
+
+        <section id="about" class="about-section hidden">
+            <div class="about-container">
+                <div class="about-text">
+                    <h2>Hi, I'm io!</h2>
+                    <p>🎲 D&D / TTRPG Player.</p>
+                    <p>I am a professional illustrator and colorist specialized in character design. I love bringing unique ideas, heroes, and villains to life through my art.</p>
+                    <p>If you like my style and have a concept you'd like to bring into reality, send me a message!</p>
+                </div>
+                <div class="about-visual">
+                    <div class="blob"></div>
+                    <img src="images/image_2.png" alt="About Io">
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="portfolio-section hidden">
+            <h2>Selected Works</h2>
+            <div class="gallery-wrapper">
+                <div class="gallery-track">
+                    <!-- Images will be injected here via JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section hidden">
+            <h2>Let's Create Together</h2>
+            <div class="social-links">
+                <a href="https://vgen.co/io_Dhamelin" target="_blank" class="social-card">
+                    <span class="platform">VGen</span>
+                    <span class="handle">@io_Dhamelin</span>
+                </a>
+                <a href="https://x.com/io_Dhamelin" target="_blank" class="social-card">
+                    <span class="platform">X (Twitter)</span>
+                    <span class="handle">@io_Dhamelin</span>
+                </a>
+                <a href="https://bsky.app/profile/iodhamelin.bsky.social" target="_blank" class="social-card">
+                    <span class="platform">BlueSky</span>
+                    <span class="handle">@iodhamelin</span>
+                </a>
+                <a href="https://www.instagram.com/io_dhamelin/" target="_blank" class="social-card">
+                    <span class="platform">Instagram</span>
+                    <span class="handle">@io_dhamelin</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 io_Dhamelin. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
