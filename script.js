@@ -8,7 +8,6 @@ const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('show');
-            // Unobserve after showing to keep the animation only once
             observer.unobserve(entry.target);
         }
     });
@@ -28,36 +27,56 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Setup Gallery Track
-const setupGallery = () => {
-    const track = document.querySelector('.gallery-track');
-    if (!track) return;
+// Setup Grid
+const setupGrid = () => {
+    const grid = document.getElementById('portfolio-grid');
+    if (!grid) return;
 
-    // Use available images dynamically
-    const numImages = 17; // We have 17 images based on renaming
     let imagesHTML = '';
     
-    // We mix them up a bit to make it look nicer
+    // Shuffle images (images are numbered 2 to 18)
     const imageOrder = [];
-    for(let i=1; i<=numImages; i++) imageOrder.push(i);
-    // Simple shuffle
+    for(let i=2; i<=18; i++) imageOrder.push(i);
     imageOrder.sort(() => Math.random() - 0.5);
 
     imageOrder.forEach(num => {
         imagesHTML += `
-            <div class="gallery-item">
-                <img src="images/image_${num}.png" alt="Artwork ${num}" loading="lazy">
+            <div class="grid-wrapper" onclick="openLightbox('images/image_${num}.png')">
+                <div class="grid-item">
+                    <img src="images/image_${num}.png" alt="Artwork ${num}" loading="lazy">
+                </div>
             </div>
         `;
     });
     
-    // Duplicate for infinite scroll
-    track.innerHTML = imagesHTML + imagesHTML;
+    grid.innerHTML = imagesHTML;
 };
 
-setupGallery();
+setupGrid();
 
-// Starry Canvas Background
+// Lightbox logic
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const closeBtn = document.querySelector(".close-lightbox");
+
+if (lightbox) {
+    window.openLightbox = (src) => {
+        lightbox.style.display = "block";
+        lightboxImg.src = src;
+    }
+
+    closeBtn.onclick = () => {
+        lightbox.style.display = "none";
+    }
+
+    lightbox.onclick = (e) => {
+        if (e.target !== lightboxImg) {
+            lightbox.style.display = "none";
+        }
+    }
+}
+
+// Art Deco / Hextech Canvas Background (Floating specs of magic)
 const canvasContainer = document.getElementById('canvas-container');
 const canvas = document.createElement('canvas');
 canvasContainer.appendChild(canvas);
@@ -71,18 +90,21 @@ const initCanvas = () => {
     height = canvas.height = window.innerHeight;
     particles = [];
     
-    // Create particles
-    const particleCount = window.innerWidth < 768 ? 50 : 120;
+    const particleCount = window.innerWidth < 768 ? 40 : 80;
     
     for(let i = 0; i < particleCount; i++) {
+        // Mixed colors: Hextech Cyan and Hextech Gold
+        const isGold = Math.random() > 0.5;
+        
         particles.push({
             x: Math.random() * width,
             y: Math.random() * height,
-            radius: Math.random() * 1.5 + 0.5,
-            speedX: (Math.random() - 0.5) * 0.3,
-            speedY: (Math.random() - 0.5) * 0.3,
-            alpha: Math.random(),
-            alphaChange: (Math.random() * 0.02) - 0.01
+            radius: Math.random() * 2 + 0.5,
+            speedX: (Math.random() - 0.5) * 0.4,
+            speedY: (Math.random() - 0.5) * 0.4 - 0.2, // Drift slightly upwards like magic dust
+            alpha: Math.random() * 0.5,
+            alphaChange: (Math.random() * 0.01) - 0.005,
+            color: isGold ? '200, 155, 60' : '10, 200, 185' // Gold or Cyan
         });
     }
 };
@@ -94,31 +116,35 @@ const animateCanvas = () => {
         p.x += p.speedX;
         p.y += p.speedY;
         
-        // Wrap around edges
         if(p.x < 0) p.x = width;
         if(p.x > width) p.x = 0;
         if(p.y < 0) p.y = height;
         if(p.y > height) p.y = 0;
         
-        // Twinkle effect
         p.alpha += p.alphaChange;
-        if(p.alpha <= 0.1 || p.alpha >= 0.8) {
+        if(p.alpha <= 0.05 || p.alpha >= 0.6) {
             p.alphaChange = -p.alphaChange;
         }
         
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        // Deep purple / accent color glow
-        ctx.fillStyle = `rgba(162, 115, 255, ${p.alpha})`; 
+        // Give particles a diamond shape for Art Deco feel
+        ctx.moveTo(p.x, p.y - p.radius);
+        ctx.lineTo(p.x + p.radius, p.y);
+        ctx.lineTo(p.x, p.y + p.radius);
+        ctx.lineTo(p.x - p.radius, p.y);
+        ctx.closePath();
+        
+        ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`; 
         ctx.fill();
+        
+        // Glow effect
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = `rgba(${p.color}, ${p.alpha})`;
     });
     
     requestAnimationFrame(animateCanvas);
 };
 
-window.addEventListener('resize', () => {
-    initCanvas();
-});
-
+window.addEventListener('resize', initCanvas);
 initCanvas();
 animateCanvas();
