@@ -710,6 +710,10 @@ footer {
     .hero-image {
         margin-top: 4rem;
     }
+    .home-image img {
+        transform: scale(1) translateX(0);
+        transform-origin: center center;
+    }
     h1.title {
         font-size: 3.5rem;
     }
