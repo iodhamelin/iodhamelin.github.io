@@ -102,6 +102,13 @@ nav.scrolled {
     letter-spacing: 3px;
     color: var(--gold-primary);
     text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.logo:hover {
+    color: var(--hex-cyan);
+    text-shadow: 0 0 15px var(--hex-cyan);
 }
 
 .nav-links {
