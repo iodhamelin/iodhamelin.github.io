@@ -214,6 +214,37 @@ nav.scrolled {
     filter: sepia(0.1) contrast(1.1);
 }
 
+/* Home Image (Difuminado without borders) */
+.home-image {
+    flex: 1.2;
+}
+
+.home-image img {
+    width: 100%;
+    max-width: 900px;
+    max-height: 90vh;
+    object-fit: contain;
+    display: block;
+    /* Adjusted fade: Top less intense (10%), others remain intense */
+    -webkit-mask-image: 
+        linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%), 
+        linear-gradient(to bottom, transparent 0%, black 10%, black 75%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: 
+        linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%), 
+        linear-gradient(to bottom, transparent 0%, black 10%, black 75%, transparent 100%);
+    mask-composite: intersect;
+    filter: drop-shadow(0 0 30px rgba(10, 200, 185, 0.6));
+    transform: scale(1.1) translateX(15px);
+    transform-origin: center right;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
 h1.title {
     font-family: var(--font-heading);
     font-size: 5rem;
