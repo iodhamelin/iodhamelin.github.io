@@ -32,24 +32,50 @@ const setupGrid = () => {
     const grid = document.getElementById('portfolio-grid');
     if (!grid) return;
 
-    let imagesHTML = '';
+    // Hardcoded arrays determined from image dimensions
+    const landscapeFiles = [
+        "2.png", "3.png", "Ellon_character_sheet.jpg",
+        "Karver_new_presentation.jpg", "KP_Group.png", "presentacion.jpg"
+    ];
     
-    // Shuffle images (images are numbered 2 to 18)
-    const imageOrder = [];
-    for(let i=2; i<=18; i++) imageOrder.push(i);
-    imageOrder.sort(() => Math.random() - 0.5);
+    const portraitFiles = [
+        "1.png", "Amelia.png", "character.png", "EnderNyx_2.png", 
+        "F3TTST3R_CHARACTER_DESIGN.png", "Johnnie_character_design.png", 
+        "Nemmy.png", "neona.png", "solo_character.png", "solo_pj.png", 
+        "Theron.png", "washi.png"
+    ];
 
-    imageOrder.forEach(num => {
-        imagesHTML += `
-            <div class="grid-wrapper" onclick="openLightbox('images/image_${num}.png')">
+    // Shuffle arrays independently
+    landscapeFiles.sort(() => Math.random() - 0.5);
+    portraitFiles.sort(() => Math.random() - 0.5);
+
+    let html = '<div class="masonry-grid landscape-columns">';
+    landscapeFiles.forEach(filename => {
+        html += `
+            <div class="grid-wrapper" onclick="openLightbox('artwork/${filename}')">
                 <div class="grid-item">
-                    <img src="images/image_${num}.png" alt="Artwork ${num}" loading="lazy">
+                    <img src="artwork/${filename}" alt="Artwork" loading="lazy">
                 </div>
             </div>
         `;
     });
+    html += '</div><div class="masonry-grid portrait-columns">';
     
-    grid.innerHTML = imagesHTML;
+    portraitFiles.forEach(filename => {
+        html += `
+            <div class="grid-wrapper" onclick="openLightbox('artwork/${filename}')">
+                <div class="grid-item">
+                    <img src="artwork/${filename}" alt="Artwork" loading="lazy">
+                </div>
+            </div>
+        `;
+    });
+    html += '</div>';
+    
+    grid.innerHTML = html;
+    
+    // Remove masonry-grid class from parent if it has it to avoid nesting
+    grid.classList.remove('masonry-grid');
 };
 
 setupGrid();

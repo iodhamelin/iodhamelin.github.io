@@ -90,25 +90,35 @@ nav {
 }
 
 nav.scrolled {
-    padding: 1rem 6%;
+    padding: 1.5rem 6% 0.5rem 6%;
     background: rgba(3, 15, 12, 0.95);
-    border-bottom: 1px solid var(--gold-dark);
+}
+
+nav.scrolled::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 2%;
+    width: 96%;
+    height: 1px;
+    background: var(--gold-dark);
 }
 
 .logo {
-    font-family: var(--font-heading);
-    font-size: 1.8rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: var(--gold-primary);
-    text-transform: uppercase;
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
-.logo:hover {
-    color: var(--hex-cyan);
-    text-shadow: 0 0 15px var(--hex-cyan);
+.logo img {
+    height: 65px;
+    width: auto;
+    display: block;
+    transition: filter 0.3s ease;
+}
+
+.logo:hover img {
+    filter: drop-shadow(0 0 15px var(--hex-cyan));
 }
 
 .nav-links {
@@ -177,6 +187,10 @@ nav.scrolled {
 .hero-content {
     flex: 1;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .hero-image {
@@ -242,7 +256,7 @@ nav.scrolled {
         linear-gradient(to bottom, transparent 0%, black 10%, black 75%, transparent 100%);
     mask-composite: intersect;
     filter: drop-shadow(0 0 30px rgba(10, 200, 185, 0.6));
-    transform: scale(1.1) translateX(15px);
+    transform: scale(1.1) translateX(35px);
     transform-origin: center right;
 }
 
@@ -252,14 +266,12 @@ nav.scrolled {
     100% { transform: translateY(0px); }
 }
 
-h1.title {
-    font-family: var(--font-heading);
-    font-size: 5rem;
-    line-height: 1.1;
-    color: var(--gold-primary);
-    text-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    text-transform: uppercase;
-    letter-spacing: 2px;
+.hero-logotipo {
+    width: 100%;
+    max-width: 550px;
+    display: block;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+    margin-bottom: 1.5rem;
 }
 
 .subtitle {
@@ -286,6 +298,7 @@ h1.title {
     clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
     transition: all 0.3s ease;
     border: 1px solid var(--hex-cyan);
+    border-right-width: 2px;
 }
 
 .cta-button::before {
@@ -324,6 +337,25 @@ h2 {
 #portfolio h2, #contact h2 {
     text-align: center;
     margin-bottom: 10px;
+}
+
+.contact-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.social-icon {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.social-card:hover .social-icon {
+    transform: scale(1.1);
 }
 
 /* About */
@@ -462,15 +494,38 @@ h2 {
     opacity: 0.4;
 }
 
-/* Portfolio Grid */
+/* Portfolio Grid - True Masonry */
 .masonry-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-    gap: 2rem;
-    padding: 2rem 0;
+    column-gap: 2rem;
+    padding-bottom: 2rem;
+}
+
+.landscape-columns {
+    column-count: 2;
+}
+
+.portrait-columns {
+    column-count: 4;
+}
+
+@media (max-width: 1200px) {
+    .portrait-columns { column-count: 3; }
+}
+
+@media (max-width: 900px) {
+    .landscape-columns { column-count: 1; }
+    .portrait-columns { column-count: 2; }
+}
+
+@media (max-width: 600px) {
+    .portrait-columns { column-count: 1; }
 }
 
 .grid-wrapper {
+    display: inline-block;
+    width: 100%;
+    break-inside: avoid;
+    margin-bottom: 2rem;
     transition: transform 0.4s ease, filter 0.4s ease;
     cursor: pointer;
 }
@@ -485,9 +540,8 @@ h2 {
     overflow: hidden;
     clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
     background: var(--bg-secondary);
-    aspect-ratio: 3/4;
     width: 100%;
-    height: 100%;
+    display: flex;
 }
 
 .grid-item::after {
@@ -506,8 +560,8 @@ h2 {
 
 .grid-item img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
     display: block;
     transition: transform 0.6s ease, filter 0.3s;
     filter: brightness(0.8);
