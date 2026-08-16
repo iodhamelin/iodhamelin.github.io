@@ -722,7 +722,30 @@ footer {
 }
 
 @media (max-width: 600px) {
-    h1.title { font-size: 2.8rem; }
-    .nav-links { display: none; }
     section { padding: 6rem 5%; }
+    
+    /* Mobile Nav */
+    nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem 5%;
+    }
+    nav.scrolled {
+        padding: 1rem 5% 0.5rem;
+    }
+    .nav-links {
+        display: flex;
+        gap: 1.5rem;
+    }
+    .nav-links a {
+        font-size: 0.8rem;
+    }
+
+    /* Mobile Contact */
+    .social-links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 1.5rem;
+    }
 }
